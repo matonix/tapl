@@ -54,11 +54,11 @@ $$
 ### 証明
 
 - (a)
-  - (1) (1') より、 $\mathcal{S}_n^1 = \{ 0, \dots, n-1 \} \sube \mathcal{S}_n$ なので、  $ 0 \le \textsf{k} < n$ ならば $ \textsf{k} \in \mathcal{S}_n \sube \mathcal{S}$
+  - (1) (1') より、 $\mathcal{S}_n^1 = \{ 0, \dots, n-1 \} \sube \mathcal{S}_n$ なので、  $ 0 \le \textsf{k} < n$ ならば $ \textsf{k} \in \mathcal{S}_n \in \mathcal{S}$
   - (2)  $ \textsf{t}_1 \in \mathcal{S}_n$ かつ $n > 0$ ならば、ある $i$ について $ \textsf{t}_1 \in \mathcal{S}_n^i$ とならねばならない。
-    このとき (2') より $\lambda. \textsf{t}_1 \in \mathcal{S}_{n-1}^{i+1} \sube \mathcal{S}_{n-1} \sube \mathcal{S}$  
+    このとき (2') より $\lambda. \textsf{t}_1 \in \mathcal{S}_{n-1}^{i+1} \sube \mathcal{S}_{n-1} \in \mathcal{S}$  
   - (3) $\textsf{t}_1 \in \mathcal{S}_n$ かつ $\textsf{t}_2 \in \mathcal{S}_n$ ならば、ある $i$ について $ \textsf{t}_1, \textsf{t}_2 \in \mathcal{S}_n^i$ とならねばならない。
-    このとき (3') より ${\sf (t_1\ t_2)} \in \mathcal{S}_n^{i+1} \sube \mathcal{S}_n \sube \mathcal{S}$
+    このとき (3') より ${\sf (t_1\ t_2)} \in \mathcal{S}_n^{i+1} \sube \mathcal{S}_n \in \mathcal{S}$
 - (b)
   - 方針：ある $\mathcal{S}_n'$ が定義 6.1.2. を満たすと仮定する。 $i$ に関する完全帰納法を用いて、すべての $i$ について $\mathcal{S}_n^i \sube \mathcal{S}_n'$ を示す。これから $\mathcal{S}_n \sube \mathcal{S}_n'$ が得られるのは明らか。
   - すべての $j<i$ について、 $\mathcal{S}_n^j \sube \mathcal{S}_n'$ を仮定し、 $\mathcal{S}_n^i \sube \mathcal{S}_n'$ を示す。
@@ -69,5 +69,18 @@ $$
       - $\textsf{t}$ がある $\textsf{t}_1, \textsf{t}_2 \in \mathcal{S}_n^j$ に対して $\textsf{t}_1\ \textsf{t}_2$ の形ならば、 $\textsf{t}_1, \textsf{t}_2 \in \mathcal{S}_n'$ なので、 (3) より $(\textsf{t}_1\ \textsf{t}_2) \in \mathcal{S}_n'$
   - よって、すべての $i$ について $\mathcal{S}_n^i \sube \mathcal{S}_n'$ を証明した。 $\mathcal{S}_n$ は $\mathcal{S}_n^i$ の和集合なので、 $\mathcal{S}_n \sube \mathcal{S}_n'$ が得られる。
 
+## 演習 6.1.5. $[推奨, \star\star\star]$
 
+### (1) $removenames_\Gamma(\textsf{t})$を定義せよ
+
+$removenames_\Gamma(\textsf{t}) = go_\Gamma(\textsf{t}, 0, \phi)$ 
+where
+$go_\Gamma(\textsf{x}, d, D) = D(x)-d$ if $x \in dom(\Gamma)$
+$go_\Gamma(\textsf{x}, d, D) = D(x)-d+\Gamma(x)$ otherwise
+$go_\Gamma(\lambda\textsf{x}. \textsf{t}_1, d, D) = \lambda.go_\Gamma(\textsf{t}_1, d+1, D\cup\{\textsf{x} \mapsto d\})$
+$go_\Gamma(\textsf{t}_1\ \textsf{t}_2, d, D) = go_\Gamma(\textsf{t}_1, d, D)\ go_\Gamma(\textsf{t}_2, d, D)$
+
+
+
+### (2) $restorenames_\Gamma(\textsf{t})$を定義せよ
 
