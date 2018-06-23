@@ -73,14 +73,39 @@ $$
 
 ### (1) $removenames_\Gamma(\textsf{t})$を定義せよ
 
-$removenames_\Gamma(\textsf{t}) = go_\Gamma(\textsf{t}, 0, \phi)$ 
-where
-$go_\Gamma(\textsf{x}, d, D) = D(x)-d$ if $x \in dom(\Gamma)$
-$go_\Gamma(\textsf{x}, d, D) = D(x)-d+\Gamma(x)$ otherwise
-$go_\Gamma(\lambda\textsf{x}. \textsf{t}_1, d, D) = \lambda.go_\Gamma(\textsf{t}_1, d+1, D\cup\{\textsf{x} \mapsto d\})$
-$go_\Gamma(\textsf{t}_1\ \textsf{t}_2, d, D) = go_\Gamma(\textsf{t}_1, d, D)\ go_\Gamma(\textsf{t}_2, d, D)$
-
-
+$$
+removenames_\Gamma(\textsf{t}) = rem_\Gamma(\textsf{t}, 0, \phi)\\
+where\quad
+\begin{eqnarray}
+rem_\Gamma(\textsf{x}, d, D) &=& 
+\begin{cases}
+d+\Gamma(\textsf{x}) & \textsf{x} \in dom(\Gamma)\\
+d-1-D(\textsf{x}) & otherwise
+\end{cases}\\
+rem_\Gamma(\lambda\textsf{x}. \textsf{t}_1, d, D) &=& \lambda.rem_\Gamma(\textsf{t}_1, d+1, D\cup\{\textsf{x} \mapsto d\})\\
+rem_\Gamma(\textsf{t}_1\ \textsf{t}_2, d, D) &=& rem_\Gamma(\textsf{t}_1, d, D)\ rem_\Gamma(\textsf{t}_2, d, D)\\
+\end{eqnarray}
+$$
 
 ### (2) $restorenames_\Gamma(\textsf{t})$を定義せよ
+
+- あるマッピングの集合 $\Alpha$ に対し $\Alpha^{-1}$ のように書いたとき、マッピングの方向が逆になった集合を表すとする
+  - 例: $\{x \mapsto 4\}^{-1} = \{4 \mapsto x\}$
+
+$$
+restorenames_\Gamma(\textsf{t}) = res_\Gamma(\textsf{t}, 0, \phi)\\
+where\quad
+\begin{eqnarray}
+res_\Gamma(n, d, D) &=& 
+\begin{cases}
+\Gamma^{-1}(n-d) & n-d \in dom(\Gamma^{-1})\\
+D^{-1}(d-1-n) & otherwise
+\end{cases}\\
+res_\Gamma(\lambda. \textsf{t}_1, d, D) &=& \lambda \textsf{x}_{fresh}. res_\Gamma(\textsf{t}_1, d+1, D\cup\{\textsf{x}_{fresh} \mapsto d\})\\
+& & \quad where\quad  \textsf{x}_{fresh} = fresh(\mathcal{V}\setminus(\Gamma \cup D))\\
+res_\Gamma(\textsf{t}_1\ \textsf{t}_2, d, D) &=& res_\Gamma(\textsf{t}_1, d, D)\ res_\Gamma(\textsf{t}_2, d, D)\\
+\end{eqnarray}\\
+where\quad
+fresh(X) = X^{-1}(\min dom(X^{-1}))
+$$
 
