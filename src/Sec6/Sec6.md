@@ -22,6 +22,8 @@ ${\sf fix = \lambda . (\lambda . 1\ (\lambda . (1\ 1)\ 0)) (\lambda . 1\ (\lambd
 
 ${\sf foo = (\lambda . (\lambda . 0)) (\lambda . 0);}$
 
+- 自己採点: ok
+
 ## 演習 6.1.4. $[\star\star\star \nrightarrow]$
 
 #### 再掲: 定義 6.1.2.
@@ -102,10 +104,88 @@ res_\Gamma(n, d, D) &=&
 D^{-1}(d-1-n) & otherwise
 \end{cases}\\
 res_\Gamma(\lambda. \textsf{t}_1, d, D) &=& \lambda \textsf{x}_{fresh}. res_\Gamma(\textsf{t}_1, d+1, D\cup\{\textsf{x}_{fresh} \mapsto d\})\\
-& & \quad where\quad  \textsf{x}_{fresh} = fresh(\mathcal{V}\setminus(\Gamma \cup D))\\
+& & where\quad \textsf{x}_{fresh} = fresh(\mathcal{V}\setminus(\Gamma \cup D))\\
+& & where\quad fresh(X) = X^{-1}(\min dom(X^{-1}))\\
 res_\Gamma(\textsf{t}_1\ \textsf{t}_2, d, D) &=& res_\Gamma(\textsf{t}_1, d, D)\ res_\Gamma(\textsf{t}_2, d, D)\\
 \end{eqnarray}\\
-where\quad
-fresh(X) = X^{-1}(\min dom(X^{-1}))
 $$
 
+- 自己採点: わかりません（最も右にある $\textsf{x}$ のインデックスを求めるのに、再帰的定義だと現在の深さ $d$ とラムダ抽象  $\lambda \textsf{x}.$ に付随する変項 $\textsf{x}$ が出現したときの深さを保持する集合 $D$ が必要なんじゃない？というアイディアで書きました）
+
+## 演習 6.2.2. $[\star]$
+
+省略
+
+## 演習 6.2.3. $[\star\star \nrightarrow]$
+
+- 任意の $\textsf{t}, d, c$ に対して $\begin{cases} \uparrow^d_c(\textsf{t}) \leq n+d\ 項\\ \uparrow^d_c(\textsf{t}) \geq 0\ 項 \end{cases}$ であることを示したい
+- とりあえず境界部分のケースを考える
+  - $n+d$ 項となる場合: $\textsf{t} = 0\ 1\ \dots(n-d-1)\ \underbrace{(\lambda. \dots (\lambda.}_{d-1}\ (n-d)\ \dots\ (n-1)\underbrace{)\dots)}_{d-1}\ (n-d)\ \dots\  (n-1)\  \quad (c=n-d-1, 0\leq d\leq n-1)$
+    - 実際にシフトすると: $\uparrow^d_{n-d-1}(\textsf{t}) =  0\ 1\ \dots(n-d-1)\ \underbrace{(\lambda. \dots (\lambda.}_{d-1}\ (n-d)\ \dots\ (n-1)\underbrace{)\dots)}_{d-1}\ n\ \dots\  (n-1+d)$
+  - $0$ 項となる場合: $\textsf{t} = 0$
+    - $0$ 項であり $n$ 項でもあるはず…
+- $n+d+1$ 項以上は作り得ないことを示すには $n+d$ 以上のインデックスを作り得ないことを示せばよい 
+  - 任意の項で $\uparrow^d_c$ なるシフトで内部的に $d+1$ 以上シフトされるインデックスが存在し得ないことを示す
+  - シフトの定義から自明と言える？
+
+## 演習 6.2.5. $[\star]$
+
+省略
+
+## 演習 6.2.6. $[\star\star \nrightarrow]$
+
+[TODO]
+
+## 演習 6.2.7. $[\star \nrightarrow]$
+
+省略（ちゃんと書きましたよ…？）
+
+## 演習 6.2.8. $[推奨, \star\star\star]$
+
+### (1) どのような定理が証明される必要があるか
+
+通常の項に対して代入を行ってから名前を除去したときと、名前を除去してから代入を行ったときで同じ項が得られる
+
+### (2) 証明せよ
+
+[TODO]
+
+## 演習 6.3.1 $[\star]$
+
+- $\textsf{t}_{12}$ と $\textsf{v}_2$ が負のインデックスを含まない限り、負のインデックスを含む項が作られるおそれはない。
+
+E-AppAbs では、 $\textsf{t}_{12}$ 中の 0 の出現が全て $\uparrow^1(\textsf{v}_2)$ に置き換わる。そのため、 $\uparrow^1(\textsf{v}_2)$ の自由変数が全て 1 以上ならば、$\textsf{t}_{12}$ 中の変数はすべて 1 以上である。
+
+また、 $\textsf{v}_2$ 中の 0 以上の自由変数は $\uparrow^1(\textsf{v}_2)$ においてすべて 1 以上となっている。
+
+以上から、$[0 \mapsto \uparrow^1(\textsf{v}_2)]\textsf{t}_{12}$ の自由変数はすべて 1 以上であり、E-AppAbs によって負のインデックスを含む項は出現しない。
+
+## 演習 6.3.2 $[\star\star\star]$
+
+De Bruijn レベルを、通常の項 $\textsf{t}$ に対する名無し項構成関数 $removenames'_\Gamma(\textsf{t})$ を構成することによって定義する。
+$$
+removenames'_\Gamma(\textsf{t}) = rem'_\Gamma(\textsf{t}, 0, \phi)\\
+where\quad
+\begin{eqnarray}
+rem'_\Gamma(\textsf{x}, d, D) &=& 
+\begin{cases}
+d+\Gamma(\textsf{x}) & \textsf{x} \in dom(\Gamma)\\
+D(\textsf{x}) & otherwise
+\end{cases}\\
+rem'_\Gamma(\lambda\textsf{x}. \textsf{t}_1, d, D) &=& \lambda.rem'_\Gamma(\textsf{t}_1, d+1, D\cup\{\textsf{x} \mapsto d\})\\
+rem'_\Gamma(\textsf{t}_1\ \textsf{t}_2, d, D) &=& rem'_\Gamma(\textsf{t}_1, d, D)\ rem'_\Gamma(\textsf{t}_2, d, D)\\
+\end{eqnarray}
+$$
+変化があるのは実質 $\textsf{x}$ がマッチした場合の第2項だけであり、$d-1-D(\textsf{x})$ が $D(\textsf{x})$ に変化している。
+
+つまり、束縛変数のレベルはそのままラムダ項として出現したときのラムダの深さとなる。
+
+同様に名無し項 $\textsf{t}$ に対する通常の項構成関数 $restorenames'_\Gamma(\textsf{t})$ を構成する。
+
+[TODO]
+
+演習 6.1.5. と同様、 2つの関数が逆写像（のような）性質を持つことができれば、通常の項を経由してインデックスとレベルは相互に復元できるため、インデックスとレベルは同型となる。
+
+2つの関数が逆写像（のような）性質を持つことに関する証明は [TODO]
+
+- ここまで書いておいて思ったが、逆写像性を言えたからといって変換の一意性があるわけではないから、通常の項を経由する方法はうまく行かないかも…
