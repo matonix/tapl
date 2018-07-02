@@ -1,4 +1,4 @@
-module Sec4.Arith where
+module Sec4.Ex4_2_2 where
 
 import Control.Exception
 
