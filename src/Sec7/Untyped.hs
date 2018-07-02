@@ -82,11 +82,14 @@ tmmap onvar = walk where
 
 -- | 1-step evaluation
 eval1 :: Context -> Term -> Term
+-- E-AppAbs
 eval1 ctx (TmApp _fi (TmAbs _ _x t12) v2) | isval ctx v2 =
   termSubstTop v2 t12
+-- E-App2
 eval1 ctx (TmApp fi v1 t2) | isval ctx v1 =
   let t2' = eval1 ctx t2 in
   TmApp fi v1 t2'
+-- E-App1
 eval1 ctx (TmApp fi t1 t2) =
   let t1' = eval1 ctx t1 in
   TmApp fi t1' t2

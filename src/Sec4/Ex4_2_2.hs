@@ -21,7 +21,6 @@ data Term =
   | TmIsZero Info Term
   deriving (Show)
 
-
 isZero :: Term -> Bool
 isZero (TmZero _) = True
 isZero _ = False
@@ -67,8 +66,3 @@ eval t = do
   case t' of
     Left NoRuleApplies -> return t -- buggy?
     Right t'' -> eval t''
-
--- Ex 4.2.1 [**]
--- evalBig :: Term -> Maybe Term とし、
--- 推論規則にマッチする場合は Just で評価後の項を包んで返し、
--- マッチしない場合は NoRuleApplies の代わりに Nothing を返す。
