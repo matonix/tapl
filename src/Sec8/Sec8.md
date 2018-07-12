@@ -86,3 +86,18 @@ pred 0 に対して型付け導出を行うと、T-Pred → T-Zero の順で導�
 成り立たない。反例は if true then 0 else true である。
 
 if true then 0 else true に対して E-IfTrue による評価が可能であり、結果は 0 となる。 0 に対しては T-Zero が、 true に対しては T-True によって型付けでき、 0 : Nat (= t'), true : Bool となる。このとき、if true then 0 else true (= t) に適用できる型付け規則は存在せず、ゆえに成り立たない。
+
+### 演習 8.3.7. $[推奨, \star\star]$
+
+大ステップ評価に対して進行と保存が成立することである。すなわち、以下が成立すればよい。
+
+- [進行] t が well typed と仮定すると、 t は値であるか、ある t' が存在して t ↑ t'
+- [保存] t : T かつ t ↑ t' ならば t' : T
+
+### 演習 8.3.8. $[推奨, \star\star]$
+
+wrongを除いた評価に対して進行と保存が成立することである。すなわち、以下が成立すればよい。
+
+- [進行] t が well typed と仮定すると、 t は値であるか、ある wrong ではない t' が存在して t → t'
+- [保存] ある wrong ではない t' が存在して t : T かつ t → t' ならば t' : T
+
