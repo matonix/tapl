@@ -1,35 +1,33 @@
-name: tapl
-version: '0.1.0'
-category: Web
-author: maton
-maintainer: automatonix@gmail.com
+library:
+  source-dirs: src
+tests:
+  tapl-test:
+    source-dirs: test
+    main: Spec.hs
+    dependencies:
+    - tapl
+    - hspec
 copyright: Yokoyama Haruki
-license: BSD3
-github: matonix/tapl
-
-dependencies:
-- base >=4.7 && <5
-- deepseq
+category: Web
+maintainer: automatonix@gmail.com
 ghc-options:
 - -Wall
 - -threaded
 - -rtsopts
 - -with-rtsopts=-N
-
-library:
-  source-dirs: src
-
+dependencies:
+- parser-combinators
+- megaparsec
+- base >=4.7 && <5
+- deepseq
+name: tapl
+version: 0.1.0
+author: maton
+github: matonix/tapl
+license: BSD3
 executables:
   tapl:
-    main: Main.hs
     source-dirs: app
+    main: Main.hs
     dependencies:
     - tapl
-
-tests:
-  tapl-test:
-    main: Spec.hs
-    source-dirs: test
-    dependencies:
-    - tapl
-    - hspec
