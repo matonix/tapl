@@ -1,5 +1,7 @@
 module Sec10.Parser where
 
+import Data.List
+import Data.Maybe
 import Sec10.SimplyTyped
 import Data.Void
 import Control.Monad.Combinators.Expr
@@ -29,6 +31,23 @@ data NamedTerm
   | NTmFalse Info
   | NTmIf Info NamedTerm NamedTerm NamedTerm
   deriving (Eq, Show)
+
+-- * transform
+
+removenames :: Judgement -> Term
+removenames (ctx, NTmVar fi name, _typ) =
+  TmVar fi (fromJust (findIndex ((==name) . fst) ctx)) (length ctx)
+removenames (ctx, NTmAbs fi name typ1 t1, typ2) =
+  TmAbs fi name typ1 (removenames ((name, VarBind typ1):ctx, t1, typ2))
+removenames (ctx, NTmApp fi t1 t2, typ) =
+  TmApp fi (removenames (ctx, t1, typ)) (removenames (ctx, t2, typ))
+removenames (_ctx, NTmTrue fi, _typ) =
+  TmTrue fi
+removenames (_ctx, NTmFalse fi, _typ) =
+  TmFalse fi
+removenames (ctx ,NTmIf fi t1 t2 t3, typ) = 
+  TmIf fi (removenames (ctx, t1, typ)) 
+    (removenames (ctx, t2, typ)) (removenames (ctx, t3, typ))
 
 fromString :: String -> Maybe Judgement
 fromString = parseMaybe judgement
@@ -105,7 +124,7 @@ term = parens appTerm
   <|> trueTerm
   <|> falseTerm
   <|> ifTerm
-  
+
 varTerm :: Parser NamedTerm
 varTerm = NTmVar Info
   <$> identifier
