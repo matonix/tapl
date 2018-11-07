@@ -86,5 +86,14 @@ $$
 
 ## 演習 11.5.2. [$\star\star$]
 
-このアイディアは、 $\sf t_2$ 中で複数 $\sf x$ が出現する場合に、もともとの $\sf let$ の定義を用いる場合に比べて評価回数が倍増するという問題がある。（HaskellでもWHNFまで簡約するような規則になっていたと思う）
+このアイディアは、 $\sf t_2$ 中で複数 $\sf x$ が出現する場合に、もともとの $\sf let$ の定義を用いる場合に比べて評価回数が倍増するという問題がある。
+
+> 1. 評価順を変えてしまう
+> 2. well-typed でない項が、評価によって well-typed になるケースがある
+
+## 演習 11.8.1. [$\star \nrightarrow$]
+
+$$
+\{\textsf{l}_1=\textsf{v}_1,\dots,\textsf{l}_i=\textsf{v}_i,\dots,\textsf{l}_n=\textsf{v}_n\}.\textsf{l}_i\rarr\textsf{v}_i \quad i \in1..n
+$$
 
