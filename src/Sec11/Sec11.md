@@ -1,5 +1,7 @@
 # 第 11 章 単純な拡張
 
+> テキストの解答要約はこんな感じで引用表現にする（引用じゃないけど）
+
 ## 演習 11.2.1. $[\star\star\star]$
 
 チャーチ数を次のように与える（型は省略）
@@ -97,3 +99,36 @@ $$
 \{\textsf{l}_1=\textsf{v}_1,\dots,\textsf{l}_i=\textsf{v}_i,\dots,\textsf{l}_n=\textsf{v}_n\}.\textsf{l}_i\rarr\textsf{v}_i \quad i \in1..n
 $$
 
+## 演習 11.8.2. [\star\star\star$] 
+
+### (1) 型付け規則
+
+パターン束縛に関して次の規則を加える。
+$$
+\frac{
+	\Gamma \vdash {\sf t_1:T_1}
+	\qquad
+	\Gamma,{\sf p:T_1} \vdash {\sf t_2:T_2}
+}{
+    \Gamma \vdash {\sf let\ p=t_1\ in\ t_2:T_2}
+} \quad (\textrm{T-Ptn})
+$$
+ここでパターンに型が付くことが前提になっている ($\sf p:T_1$) が、パターンは変数かレコードであるため、それらの型付け規則はT-VarおよびT-Rcdで賄うことができる。 
+
+### (2) 進行、保存則の証明概略
+
+- 進行（項がwell-typedならば値or評価可能）：型付け導出に関する帰納法
+  - T-Let: 帰結部は $\Gamma \vdash {\sf let\ x=t_1\ in\ t_2:T_2}$
+    - $\sf t_2$ に依らず以下の場合分けで評価が進行する
+      - $\sf t_1$ が値→E-LetV
+      - $\sf t_1$ が評価可能→E-Let
+  - T-Rcd: 帰結部は $\Gamma \vdash \{\textsf{l}_i=\textsf{t}_i\ ^{i\in1..n}\}: \{\textsf{l}_i:\textsf{T}_i\ ^{i\in1..n}\}$
+    - $\forall i \in 1..n. \textsf{t}_i$ が値→レコード型への標準形補題
+      - $\textsf{v} : \{\textsf{l}_i:\textsf{T}_i\ ^{i\in1..n}\} \longrightarrow \textsf{v} = \{\textsf{l}_i:\textsf{v}_i\ ^{i\in1..n}\}$ (証明略)
+    - otherwise→ $\exists i \in 1..n. \textsf{t}_i$ が評価可能→E-Rcd
+  - T-Proj: 帰結部は $\sf t_1.l \rarr t_1'.l$
+    - $\textsf{t}_1 = \{\textsf{l}_i:\textsf{v}_i\ ^{i\in1..n}\}$ （フィールドがすべて値）→E-ProjRcd
+    - otherwise→E-Proj 
+  - T-Ptn ((1) で定義): 帰結部は $\Gamma \vdash {\sf let\ p=t_1\ in\ t_2:T_2}$
+    - T-Let と同様
+- 保存（well-typedな項を評価して得た項はwell-typed）
