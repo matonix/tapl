@@ -147,3 +147,12 @@ $$
       - E-Proj → T-Proj
   - T-Ptn ((1) で定義): 帰結部は $\Gamma \vdash {\sf let\ p=t_1\ in\ t_2:T_2}$
     - T-Let と同様
+
+> (1) パターン型付け規則を導入し、 $\Gamma$ に加えて $\Delta$ を環境として持つ。
+> レコードパターン型付けを行う際、マッチ対象の値が実際に持つフィールドよりも少ないフィールドにしか言及しないように改造すると、レコード射影はletへの糖衣構文になる
+>
+> (2) パターン型付け関係と実行時のマッチ演算を対応させる補題が必要
+>
+> - $\Gamma \vdash \sigma \vDash \Delta$ は、 $\Delta$ の定義域である各パターンについて、代入 $\sigma$ を実行しても $\Gamma$ 上の型はそのままである…みたいな
+> - 項もパターンも同じ型で、環境 $\Delta$ に含まれるなら、マッチは代入に評価され、 $\Gamma \vdash \sigma \vDash \Delta$ が成り立つという補題
+>   - さらに、代入補題化： $\Gamma, \Delta \vdash {\sf t : T}$ かつ $\Gamma \vdash {\sf \sigma \vDash \Delta}$ ならば $\Delta \vdash \sigma {\sf t:T}$
