@@ -126,9 +126,24 @@ $$
     - $\forall i \in 1..n. \textsf{t}_i$ が値→レコード型への標準形補題
       - $\textsf{v} : \{\textsf{l}_i:\textsf{T}_i\ ^{i\in1..n}\} \longrightarrow \textsf{v} = \{\textsf{l}_i:\textsf{v}_i\ ^{i\in1..n}\}$ (証明略)
     - otherwise→ $\exists i \in 1..n. \textsf{t}_i$ が評価可能→E-Rcd
-  - T-Proj: 帰結部は $\sf t_1.l \rarr t_1'.l$
+  - T-Proj: 帰結部は $\Gamma \vdash \textsf{t}_1.\textsf{l}_j:\textsf{T}_j$
     - $\textsf{t}_1 = \{\textsf{l}_i:\textsf{v}_i\ ^{i\in1..n}\}$ （フィールドがすべて値）→E-ProjRcd
     - otherwise→E-Proj 
   - T-Ptn ((1) で定義): 帰結部は $\Gamma \vdash {\sf let\ p=t_1\ in\ t_2:T_2}$
     - T-Let と同様
 - 保存（well-typedな項を評価して得た項はwell-typed）
+  - T-Let: 帰結部は $\Gamma \vdash {\sf let\ x=t_1\ in\ t_2:T_2}$
+    - $\Gamma \vdash {\sf t_1:T_1}$, $\Gamma, {\sf x:T_1}\vdash {\sf t_2:T_2}$ を帰結とする部分導出がある
+    - 適用可能な評価規則は E-LetV, E-Let
+      - E-LetV: $\sf t_1 = v_1 \quad t' = [x\mapsto v_1]t_2$ → 代入補題
+      - E-Let: $\sf t_1 \rarr t_1' \quad t' = let\ x=t_1'\ in\ t_2$ → T-Let
+  - T-Rcd: 帰結部は $\Gamma \vdash \{\textsf{l}_i=\textsf{t}_i\ ^{i\in1..n}\}: \{\textsf{l}_i:\textsf{T}_i\ ^{i\in1..n}\}$
+    - 各 $i$ に対して $\Gamma \vdash \textsf{t}_i:\textsf{T}_i$ を帰結とする部分導出がある
+    - 適用可能な評価規則は E-Rcd → T-Rcd
+  - T-Proj: 帰結部は $\Gamma \vdash \textsf{t}_1.\textsf{l}_j:\textsf{T}_j$
+    - $\Gamma \vdash \textsf{t}_1 : \{\textsf{l}_i:\textsf{T}_i\ ^{i\in1..n}\}$ を帰結とする部分導出がある
+    - 適用可能な評価規則は E-ProjRcd, E-Proj
+      - E-ProjRcd → 各 $i$ に対して $\textsf{l}_i:\textsf{T}_i$ が部分導出で得られている
+      - E-Proj → T-Proj
+  - T-Ptn ((1) で定義): 帰結部は $\Gamma \vdash {\sf let\ p=t_1\ in\ t_2:T_2}$
+    - T-Let と同様
