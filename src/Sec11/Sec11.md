@@ -99,7 +99,7 @@ $$
 \{\textsf{l}_1=\textsf{v}_1,\dots,\textsf{l}_i=\textsf{v}_i,\dots,\textsf{l}_n=\textsf{v}_n\}.\textsf{l}_i\rarr\textsf{v}_i \quad i \in1..n
 $$
 
-## 演習 11.8.2. [\star\star\star$] 
+## 演習 11.8.2. [$\star\star\star$] 
 
 ### (1) 型付け規則
 
