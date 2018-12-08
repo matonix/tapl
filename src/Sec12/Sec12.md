@@ -35,21 +35,35 @@ E-AppAbs において、項のサイズが減少するとは言えないため�
 
 - T-True/False の場合、直ちに明らか。
 - T-If の場合、 （証明概略、部分項を値まで評価するとRが）
-  - $\mathsf{t = if\ t_1\ then\ t_2\ else\ t_3}$ 
-    $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_1:Bool}$ 
-    $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_2:S}$ 
-    $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_3:S}$ 
-    $\mathsf{T = S}$ 
-  - 帰納法の仮定より、 $R_\mathsf{Bool}(\mathsf{\sigma_{1..n}t_1})$ かつ $R_\mathsf{S}(\mathsf{\sigma_{1..n}t_2})$ かつ $R_\mathsf{S}(\mathsf{\sigma_{1..n}t_3})$ である。
-  - $R_\mathsf{Bool}(\sigma_{1..n}\mathsf{t_1})$ と補題12.1.3. から、  $\sigma_{1..n}\mathsf{t_1} \rarr^* \mathsf{v_1}$ となり、 これは $\sf true$ か $\sf false$ かのどちらか。 
+  -  $\mathsf{t = if\ t_1\ then\ t_2\ else\ t_3}$ 
+     $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_1:Bool}$ 
+     $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_2:S}$ 
+     $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_3:S}$ 
+     $\mathsf{T = S}$ 
+  -  帰納法の仮定より、 $R_\mathsf{Bool}(\mathsf{\sigma_{1..n}t_1})$ かつ $R_\mathsf{S}(\mathsf{\sigma_{1..n}t_2})$ かつ $R_\mathsf{S}(\mathsf{\sigma_{1..n}t_3})$ である。
+  -  $R_\mathsf{Bool}(\sigma_{1..n}\mathsf{t_1})$ と補題12.1.3. から、  $\sigma_{1..n}\mathsf{t_1} \rarr^* \mathsf{v_1}$ となり、 標準形補題より $\mathsf{v_1}$ は $\sf true$ または $\sf false$ 
     -   $\sf v1 = true$ のとき、 評価導出の最後は E-IfTrue なので $\mathsf{if\ \sigma_{1..n}t_1\ then\ \sigma_{1..n}t_2\ else\ \sigma_{1..n}t_3} \rarr^* \mathsf{\sigma_{1..n}t_2}$ 
          -   $R_\mathsf{S}(\mathsf{\sigma_{1..n}t_2})$ と補題 12.1.4. より、 $R_\mathsf{S}(\mathsf{if\ \sigma_{1..n}t_1\ then\ \sigma_{1..n}t_2\ else\ \sigma_{1..n}t_3})$ となる。
     -   $\sf v1 = false$ のとき、 評価導出の最後は E-IfFalse なので $\mathsf{if\ \sigma_{1..n}t_1\ then\ \sigma_{1..n}t_2\ else\ \sigma_{1..n}t_3} \rarr^* \mathsf{\sigma_{1..n}t_3}$ 
          -   $R_\mathsf{S}(\mathsf{\sigma_{1..n}t_3})$ と補題 12.1.4. より、 $R_\mathsf{S}(\mathsf{if\ \sigma_{1..n}t_1\ then\ \sigma_{1..n}t_2\ else\ \sigma_{1..n}t_3})$ となる。
+  - すなわち、 $R_\mathsf{S}(\sigma_{1..n}(\mathsf{if\ t_1\ then\ t_2\ else\ t_3}))$ となる。
 - T-Pair の場合
-  - $\mathsf{t = \{t_1,t_2\}}$ 
-    $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_1:S_1}$ 
-    $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_2:S_2}$ 
-    $\mathsf{T = S_1 \times S_2}$ 
-  - 
-- T-Proj1/2 の場合
+  -  $\mathsf{t = \{t_1,t_2\}}$ 
+     $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_1:S_1}$ 
+     $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_2:S_2}$ 
+     $\mathsf{T = S_1 \times S_2}$ 
+  - 帰納法の仮定より、 $R_\mathsf{S_1}(\mathsf{\sigma_{1..n}t_1})$ かつ $R_\mathsf{S_2}(\mathsf{\sigma_{1..n}t_2})$ である。
+  - $R_\mathsf{S_1 \times S_2}$ の定義から、 $R_\mathsf{S_1 \times S_2}(\{\sigma_{1..n}\mathsf{t}_1,\sigma_{1..n}\mathsf{t}_2\})$ となる。
+  - すなわち、 $R_\mathsf{S_1 \times S_2}(\sigma_{1..n}(\mathsf{\{t_1,t_2\}}))$ となる。
+- T-Proj1 の場合（T-Proj2も同様）
+  -  $\mathsf{t = t_1.1}$ 
+     $\mathsf{x_1:T_1,\dots,x_\mathit{n}:T_\mathit{n} \vdash t_1:T_{11} \times T_{12}}$ 
+     $\mathsf{T = T_{11}}$ 
+  -  帰納法の仮定より、 $R_\mathsf{T_{11} \times T_{12}}(\mathsf{\sigma_{1..n}t_1})$ 、
+  -   $R_\mathsf{T_{11} \times T_{12}}$ の定義から、 $R_\mathsf{T_{11}}(\mathsf{(\sigma_{1..n}t_1).1})$ 、
+  -  すなわち $R_\mathsf{T_{11}}(\mathsf{\sigma_{1..n}(t_1.1)})$ 
+
+> - 定義 12.1.2 を拡張して、$\sf Bool$ と $\sf T_1 \times T_2$ に対応させることが必要。
+> - 補題 12.1.4 を拡張して、射影による評価について R が保存されることを示すことが必要。
+> - 補題 12.1.5 は T-Pair について、射影による評価規則で場合分けが必要。
+>   - 解答では場合分けを変数化してまとめている。かしこい。 あと連続代入を $\sigma$ にしていて自分より乱暴。
