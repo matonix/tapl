@@ -1,0 +1,39 @@
+@require: code
+@require: itemize
+@require: tabular
+@require: proof
+@import: stdjareport-tapl
+
+document (|
+  title = {型システム入門メモ};
+  author = {maton};
+|) '<
+  +chapter?:(18){事例：命令的オブジェクト}<
+    +section?:(6){単純なクラス}<
+      +practice(|
+        is-recommended = true;
+        stars = 2;
+        has-answer = true;
+      |){
+        未着手
+      }
+      +practice(|
+        is-recommended = false;
+        stars = 2;
+        has-answer = false;
+      |){
+        未着手
+      }
+    >
+    +section{インスタンス変数の付加}<
+      +practice(|
+        is-recommended = true;
+        stars = 2;
+        has-answer = true;
+      |){
+        未着手
+      }
+    >
+  >
+    % +clear-page{}
+>
