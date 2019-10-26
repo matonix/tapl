@@ -1,8 +1,9 @@
 @require: code
 @require: itemize
-@require: tabular
+@require: table
 @require: proof
 @import: stdjareport-tapl
+@import: local
 
 document (|
   title = {型システム入門メモ};
@@ -14,21 +15,124 @@ document (|
         is-recommended = true;
         stars = 2;
         has-answer = true;
-      |){
-        未着手
-      }
+      |){}
+      +code(
+        ```
+          decCounterClass =
+            lambda r:CounterRep.
+              let super = resetCounterClass r in
+                {get   = super.get,
+                 inc   = super.inc,
+                 reset = super.reset,
+                 dec   = lambda _:Unit. r.x:=pred(!(r.x))};
+        ```
+      );
       +practice(|
         is-recommended = false;
         stars = 2;
         has-answer = false;
-      |){
-        未着手
+      |){}
+      +pn{
+        新しい構文形式(${t}を項であるとする)
+        \align(
+        [
+          ${| t \adddef | \ldots    |};
+          ${|           | t \with t |};
+        ]);
+        新しい評価規則(${l, r}をレコードラベル, ${v, w}を値であるとする)
+        \enumerate{
+          * \eqn(
+              ${
+                \withapp{\binds{l}{v}{i}{1}{n}}{} \longrightarrow \brace{\binds{l}{v}{i}{1}{n}}
+              }
+            );
+          * \align([
+              ${| | 
+                  \withapp{
+                    \binds{l}{v}{i}{1}{j - 1}, \bind{l}{v}{j}, \binds{l}{v}{k}{j + 1}{n}
+                  }{
+                    \bind{l}{v'}{j}, \binds{r}{w}{h}{1}{m}
+                  }
+              |};
+              ${| \longrightarrow |
+                  \withapp{
+                    \binds{l}{v}{i}{1}{j - 1}, \bind{l}{v'}{j}, \binds{l}{v}{k}{j + 1}{n}
+                  }{
+                    \binds{r}{w}{h}{1}{m}
+                  }
+              |};
+            ]);
+          * \align([
+              ${| | 
+                  \withapp{
+                    \binds{l}{v}{i}{1}{n}
+                  }{
+                    \bind{r}{w}{j}, \binds{r}{w}{h}{1}{m}
+                  }
+              |};
+              ${| \longrightarrow |
+                  \withapp{
+                    \binds{l}{v}{i}{1}{n}, \bind{r}{w}{j}
+                  }{
+                    \binds{r}{w}{h}{1}{m}
+                  }
+              |};
+            ]);
+          * \eqn(
+              ${
+                \derive{| t_1 \longrightarrow t'_1 |}
+                      {  t_1 \with t_2 \longrightarrow t'_1 \with t_2 }
+              }
+            );
+          * \eqn(
+              ${
+                \derive{| t_2 \longrightarrow t'_2 |}
+                      {  v_1 \with t_2 \longrightarrow v_1 \with t'_2 }
+              }
+            );
+        }
+        新しい型付け規則(${T_1 \vee T_2}はp.161で見た合併型)
+        \eqn(
+          ${ 
+            \derive{| \tj{\Gamma}{t_1}{T_1} | \tj{\Gamma}{t_2}{T_2} |}
+                   {  \tj{\Gamma}{t_1 \with t_2}{T_1 \vee T_2} } 
+          }
+        );
+      }
+      +p{
+        評価規則の基本的な考え方は、マージソートにおけるマージに由来している。
+        すなわち、withの右辺のレコードを先頭から見ていき、右辺のレコードの先頭要素が
+        \enumerate{
+          * 空ならば、マージ完了である
+          * 左辺のレコードに含まれていれば、オーバーライドする
+          * 左辺のレコードに含まれていなければ、左辺に加える
+        }
+        という操作を、それぞれ１ステップで実行する。
+        (4), (5) の評価規則は、withの両辺が値になっていない場合の評価順序を定めている。
       }
     >
     +section{インスタンス変数の付加}<
       +practice(|
         is-recommended = true;
         stars = 2;
+        has-answer = true;
+      |){
+        未着手
+      }
+    >
+    +section?:(11){オープンな再帰と評価順序}<
+      +practice(|
+        is-recommended = true;
+        stars = 3;
+        has-answer = true;
+      |){
+        未着手
+      }
+    >
+    +section?:(13){要点のまとめ}<
+      +practice(|
+        is-recommended = false;
+        stars = 3;
         has-answer = true;
       |){
         未着手

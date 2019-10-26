@@ -1,0 +1,10 @@
+@require: math
+
+let-math \adddef = math-char MathRel `::=`
+let-math \with = math-char MathRel `with`
+
+let-math \bind l v i = ${#l_#i = #v_#i}
+let-math \binds l v i n m = ${#l_#i = #v_#i\ ^{#i \in #n..#m}}
+let-math \withapp l r = ${\brace{#l} \with \brace{#r}}
+
+let-math \tj mG me mty = ${#mG \vdash #me : #mty}

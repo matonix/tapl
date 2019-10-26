@@ -50,6 +50,7 @@ module StdJaReport : sig
   direct \ref-page : [string] inline-cmd
   direct \figure : [string?; inline-text; block-text] inline-cmd
   direct +p : [inline-text] block-cmd
+  direct +pn : [inline-text] block-cmd
   direct +chapter : [int?; string?; string?; inline-text; block-text] block-cmd
   direct +section : [int?; string?; string?; inline-text; block-text] block-cmd
   direct +subsection : [string?; string?; inline-text; block-text] block-cmd
@@ -106,10 +107,13 @@ end = struct
   let font-size-normal  = 12pt
   let font-size-title   = 18pt
   let font-size-author  = 16pt
-  let font-size-chapter = 22pt
-  let font-size-section = 18pt
-  let font-size-subsection = 16pt
-
+  % let font-size-chapter = 22pt
+  % let font-size-section = 18pt
+  % let font-size-subsection = 16pt
+  let font-size-chapter = 18pt
+  let font-size-section = 16pt
+  let font-size-subsection = 14pt
+  
   let section-top-margin = 20pt
   let section-bottom-margin = 12pt
 
@@ -119,13 +123,18 @@ end = struct
   let font-ratio-latin = 1.
   let font-ratio-cjk = 0.88
 
-  let font-latin-roman  = (`Junicode`   , font-ratio-latin, 0.)
+  let font-latin-roman  = (`NotoSerifJP`, font-ratio-latin, 0.)
+  let font-latin-sans   = (`NotoSansJP`, font-ratio-latin, 0.)
+  let font-latin-mono   = (`NotoSansJP`, font-ratio-latin, 0.)
+  let font-cjk-mincho   = (`NotoSerifJP`, font-ratio-cjk  , 0.)
+  let font-cjk-gothic   = (`NotoSansJP`, font-ratio-cjk  , 0.)
+  % let font-latin-roman  = (`Junicode`   , font-ratio-latin, 0.)
   let font-latin-italic = (`Junicode-it`, font-ratio-latin, 0.)
   let font-latin-bold   = (`Junicode-b` , font-ratio-latin, 0.)
-  let font-latin-sans   = (`lmsans`    , font-ratio-latin, 0.)
-  let font-latin-mono   = (`lmmono`    , font-ratio-latin, 0.)
-  let font-cjk-mincho   = (`ipaexm`    , font-ratio-cjk  , 0.)
-  let font-cjk-gothic   = (`ipaexg`    , font-ratio-cjk  , 0.)
+  % let font-latin-sans   = (`lmsans`    , font-ratio-latin, 0.)
+  % let font-latin-mono   = (`lmmono`    , font-ratio-latin, 0.)
+  % let font-cjk-mincho   = (`ipaexm`    , font-ratio-cjk  , 0.)
+  % let font-cjk-gothic   = (`ipaexg`    , font-ratio-cjk  , 0.)
 
 
   let set-latin-font font ctx =
@@ -379,6 +388,10 @@ end = struct
     let ib-parag = (quad-indent ctx) ++ ib-inner ++ inline-fil in
       form-paragraph ctx ib-parag
 
+  let-block ctx +pn inner =
+    let ib-inner = read-inline ctx inner in
+    let ib-parag = ib-inner ++ inline-fil in
+      form-paragraph ctx ib-parag
 
   let chapter-scheme ctx label title outline-title-opt inner =
     let ctx-title = make-chapter-title ctx in
