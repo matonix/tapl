@@ -1,4 +1,4 @@
-@require: code
+@import: code
 @require: itemize
 @require: table
 @require: proof
@@ -15,16 +15,20 @@ document (|
         is-recommended = true;
         stars = 2;
         has-answer = true;
-      |){}
+      |){
+        fullref 検査器は使ってません…。
+        あと、「${\lambda}」をうまく表示できなかったので、
+        代わりに「\code(`\`);」と書いてます。
+      }
       +code(
         ```
           decCounterClass =
-            lambda r:CounterRep.
+            \r:CounterRep.
               let super = resetCounterClass r in
                 {get   = super.get,
                  inc   = super.inc,
                  reset = super.reset,
-                 dec   = lambda _:Unit. r.x:=pred(!(r.x))};
+                 dec   = \_:Unit. r.x:=pred(!(r.x))};
         ```
       );
       +practice(|
@@ -117,8 +121,53 @@ document (|
         stars = 2;
         has-answer = true;
       |){
-        未着手
+        やはりfullref検査器は使ってません。
       }
+      +code(
+        ```
+          DoubleBackupCounter = 
+            {get:Unit->Nat, inc:Unit->Unit,
+             reset:Unit->Unit,backup:Unit->Unit,
+             reset2:Unit->Unit,backup2:Unit->Unit};
+
+          DoubleBackupCounterRep = 
+            {x: Ref Nat, b: Ref Nat, b2: Ref Nat};
+
+          doubleBackupCounterClass =
+            \r:DoubleBackupCounterRep.
+              let super = backupCounterClass r in
+                {get     = super.get,
+                 inc     = super.inc,
+                 reset   = \_:Unit. r.x:=!(r.b),
+                 backup  = \_:Unit. r.b:=!(r.x),
+                 reset2  = \_:Unit. r.x:=!(r.b2),
+                 backup2 = \_:Unit. r.b2:=!(r.x)};
+        ```
+      );
+      +p{
+        このとき型は、
+        \listing{
+          * \code(`
+              doubleBackupCounterClass 
+              : DoubleBackupCounterRep -> DoubleBackupCounter`);
+        }
+        のようになる。
+        関数型は反変なので、\code(`doubleBackupCounterClass`);は
+        \code(`backupCounterClass`);の部分型になっていない…？
+      }
+      +p{
+        なお、演習 18.6.2. で定めた \code(`with`); 構文を使うと、
+        \code(`doubleBackupCounterClass`); は以下のようになる。
+      }
+      +code(
+        ```
+          doubleBackupCounterClass =
+            \r:DoubleBackupCounterRep.
+              let super = backupCounterClass r in
+                super with {reset2  = \_:Unit. r.x:=!(r.b2),
+                            backup2 = \_:Unit. r.b2:=!(r.x)};
+        ```
+      );
     >
     +section?:(11){オープンな再帰と評価順序}<
       +practice(|
@@ -126,8 +175,57 @@ document (|
         stars = 3;
         has-answer = true;
       |){
-        未着手
+        以下、解答では断りなく\code(`with`);構文を用いる。
       }
+      +pn{
+        (1) \code(`get`);の呼び出しを数えられるようにする。 カウンタは共有で。
+      }
+      +code(
+        ```
+          instrCounterClass =
+            \r:InstrConterRep.
+            \self:Unit -> InstrCounter.
+              \_:Unit.
+                let super = setCounterClass r self unit in
+                  super with 
+                  {get = \i:Nat. (r.a:=succ(!(r.a)); super.get i),
+                   set = \i:Nat. (r.a:=succ(!(r.a)); super.set i),
+                   accesses = \_:Unit. !(r.a)};
+        ```
+      );
+      +pn{
+        (2) \code(`reset`);を持つサブクラスを定義。
+        \code(`InstrConterRep`);を使いまわす。
+        (\code(`ResetInstrCounter`);の型は省略。)
+      }
+      +code(
+        ```
+          resetInstrCounterClass =
+            \r:InstrConterRep.
+            \self:Unit -> ResetInstrCounter.
+              \_:Unit.
+                let super = instrCounterClass r self unit in
+                  super with {reset = \_:Unit. r.x:=1};
+        ```
+      );
+      +pn{
+        (3) \code(`backup`);を持つサブクラスを定義。(\code(`BackupInstrCounter`);の型は省略。)
+      }
+      +code(
+        ```
+          BackupInstrCounterRep = 
+            {x: Ref Nat, a: Ref Nat, b: Ref Nat};
+
+          backupInstrCounterClass =
+            \r:BackupInstrConterRep.
+            \self:Unit -> BackupInstrCounter.
+              \_:Unit.
+                let super = instrCounterClass r self unit in
+                  super with 
+                  {reset = \_:Unit. r.x:=!(r.b),
+                   backup = \_:Unit. r.b:=!(r.x)};
+        ```
+      );
     >
     +section?:(13){要点のまとめ}<
       +practice(|
@@ -135,7 +233,17 @@ document (|
         stars = 3;
         has-answer = true;
       |){
-        未着手
+        \dfn{オブジェクト同一性}を実現するには、\code(`new`);関数が呼び出される度に
+        異なる\dfn{オブジェクトID}をオブジェクトに付与するのが良いだろう。
+        オブジェクトIDの表現についてはここでは議論しない
+        \footnote{セキュリティを気にしなければ通し番号でいいだろう}。
+        あらゆる\code(`new`);関数は、内部にIDを発行するためのストアを持ち、
+        \code(`new`);関数を呼び出す度にオブジェクトにIDを付与してストアを更新する。
+      }
+      +p{
+        この機構を実装するには、すべてのクラスがIDのストアとIDの更新メソッドを持つ
+        クラスを継承するようにすればよい。
+        これはJavaにおける\code(`Object`);クラスに類似するアプローチと言える。
       }
     >
   >
