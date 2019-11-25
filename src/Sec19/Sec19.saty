@@ -1,0 +1,153 @@
+@import: code
+@require: itemize
+@require: table
+@require: proof
+@import: stdjareport-tapl
+@import: local
+
+document (|
+  title = {型システム入門メモ};
+  author = {maton};
+|) '<
+  +chapter?:(19){事例：Featherweight Java}<
+    +section?:(1){導入}<
+      +p{
+        Featherweight Java がサポートする機能は以下。
+      }
+      +listing{
+        * 相互再帰的なクラス定義
+        * オブジェクト生成
+        * フィールド参照
+        * メソッド呼び出し
+        * メソッドオーバーライド
+        * \code(`this`);を介したメソッド再帰
+        * 部分型付け
+        * キャスト
+      }
+
+    >
+    +section{概観}<
+      +p{
+        \emph{副作用を捨てると嬉しい副作用がある。}
+      }
+    >
+    +section{名前的型システムと構造的型システム}<
+      +p{
+        Java は部分型を定義する際に明示的に
+        上位型を extends したり implements するので、名前的。
+      }
+    >
+    +section{定義}<
+      +practice(|
+        is-recommended = false;
+        stars = 1;
+        has-answer = true;
+      |){
+        S-Top 規則が不要なのは、 
+        \code(`Object`); がすべてのクラスの上位型であることが
+        クラス宣言による\emph{部分型付け規則}と、
+        クラス宣言が持つ\emph{健全性条件}から明らかとなるからである。
+        部分型付け規則により、
+        あるクラスが他のクラスを継承していれば、
+        それらが部分型関係を持つことがわかる。
+        そして、クラス表が健全性条件を満たすとき、
+        すべてのクラスの上位型関係を
+        辿っていくといずれ \code(`Object`); 型関係にたどり着く。
+        これは \code(`Object`); が S-Top 規則における \code(`Top`); 型
+        と同等の役割を果たしていることに他ならない。
+      }
+      +practice(|
+        is-recommended = false;
+        stars = 2;
+        has-answer = true;
+      |){
+        18章で紹介されたレコードと部分型付けを持つラムダ計算と
+        同等の言語機能があるので、FJの構文をすべて18章のラムダ計算の構文糖衣とする。
+        これによって議論は更に簡潔になる。
+        Java風の計算体系に更に機能を加えたければ新たな構文糖衣を導入すればよく、
+        何らかの証明が必要な場合はラムダ計算の世界で行えば既存の議論を再利用できるためである。
+      }
+      +practice?*?:({破壊的代入})(|
+        is-recommended = true;
+        stars = 3;
+        has-answer = false;
+      |){
+        大雑把には、フィールドが全て参照であるとみなし、
+        コンストラクタで初期化、メソッドボディ内で破壊的代入をサポートする。
+      }
+      +practice?*?:({\code(`try-catch`);})(|
+        is-recommended = false;
+        stars = 3;
+        has-answer = false;
+      |){
+        未着手。
+      }
+      +practice?*?:({包摂規則})(|
+        is-recommended = false;
+        stars = 2;
+        has-answer = false;
+      |){
+        包摂規則は、15章(p.142)で導入されているT-Subのような規則で、
+        ざっくり言えば、部分型関係あるなら暗黙的にアップキャストしてよい、という規則である。
+        そのため、T-UCastを無くすことが可能となる。
+        しかし、構文的には明示的にも暗黙的にもアップキャストできたほうが嬉しいだろう。
+        また、15章でも議論したように、ダウンキャストに対しては明示的な指定と失敗時のフォローが必要であり、
+        包摂規則だけではT-DCastやT-SCastを取り除くことはできないだろう。
+      }
+      +practice?*?:({インターフェイス})(|
+        is-recommended = false;
+        stars = 3;
+        has-answer = true;
+      |){
+        未着手。
+      }
+      +p{
+        (1) Java流のインターフェイスでFJを拡張する。
+        ${I} はインターフェイスを表すものとする。
+        ${S} はシグネチャ宣言を表すものとする。
+        これはメソッド宣言とは異なり、メソッドボディを持たない形式である。
+      }
+      +listing{
+        * クラス宣言に次を加える: \code(`interface`); ${C} \code(`extends`); ${\bar{I}} \code(`{`); ${\bar{S}} \code(`}`);
+        * シグネチャ宣言に次を加える: ${C} ${m} \code(`(`); ${\bar{C}} ${\bar{x}} \code(`)`);
+      }
+      +p{
+        (2) インターフェイスが存在するとき部分型関係の結びの下で必ずしも閉じているとは限らないことを示す。
+      }
+      +p{
+        (3) 条件式に対するJavaの型付け規則はどのようなものかを示し、それが妥当であるかを示す。
+      }
+      +practice?*?:({\code(`super`);})(|
+        is-recommended = false;
+        stars = 3;
+        has-answer = true;
+      |){
+        未着手。
+      }
+    >
+    +section{性質}<
+      +practice?*?:({保存定理})(|
+        is-recommended = false;
+        stars = 3;
+        has-answer = true;
+      |){
+        未着手。
+      }
+      +practice?:(5)?:({FJ実装})(|
+        is-recommended = false;
+        stars = 3;
+        has-answer = false;
+      |){
+        未着手。
+      }
+      +practice?*?:({多相型実装})(|
+        is-recommended = false;
+        stars = 4;
+        has-answer = false;
+      |){
+        未着手。
+      }
+    >
+  >
+    % +clear-page{}
+>
