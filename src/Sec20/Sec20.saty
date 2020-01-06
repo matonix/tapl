@@ -1,0 +1,88 @@
+@import: code
+@require: itemize
+@require: table
+@require: proof
+@import: stdjareport-tapl
+@import: local
+
+document (|
+  title = {型システム入門メモ};
+  author = {maton};
+|) '<
+  +chapter?:(20){再帰型}<
+    +section?:(1){例}<
+      +practice(|
+        is-recommended = false;
+        stars = 2;
+        has-answer = true;
+      |){
+        Haskell による擬似的な実装を RecursiveTypes.hs に示した。
+      }
+      +practice(|
+        is-recommended = true;
+        stars = 2;
+        has-answer = true;
+      |){
+        Haskell による擬似的な実装を RecursiveTypes.hs に示した。
+      }
+      +practice(|
+        is-recommended = false;
+        stars = 2;
+        has-answer = true;
+      |){
+        Haskell による擬似的な実装を RecursiveTypes.hs に示した。
+      }
+      +practice(|
+        is-recommended = false;
+        stars = 1;
+        has-answer = true;
+      |){
+        Haskell による擬似的な実装を RecursiveTypes.hs に示した。
+        項\code(`if false then 1 else 0`);を評価すると、項\code(`0`);が得られ、
+        項\code(`if false then 1 else false`);を評価すると、項\code(`false`);が得られる。
+      }
+      +practice(|
+        is-recommended = true;
+        stars = 2;
+        has-answer = true;
+      |){
+        Haskell による擬似的な実装を RecursiveTypes.hs に示した。
+      }
+    >
+    +section{形式的議論}<
+      +practice(|
+        is-recommended = true;
+        stars = 2;
+        has-answer = true;
+      |){
+        文字化けするので${\lambda}→\code(`\`);, ${\mu}→\code(`u`);と書いてます。 
+      }
+      +code(
+        ```
+          fixT = \f:T->T. fold [T] (\x:(T->T). f (x x)) fold [T] (\x:(T->T). f (x x));
+        ```
+      );
+      +p{
+        ↑誤り。どうやら Haskell のデータコンストラクタとfold/unfoldスタイルが相性が良さそうなので、Haskell による擬似的な実装を RecursiveTypes.hs に示した。
+      }
+      +practice(|
+        is-recommended = false;
+        stars = 2;
+        has-answer = false;
+      |){
+        [進行] 項 \code(`t`); が \code(`fold [T] t1`); の形の場合は問題ない。
+        部分項 \code(`t1`); が値にまで評価されても項（\code(`t`); 全体で畳み込みの値になるためである。 
+        一方、\code(`unfold [T] t1`); の形の場合は注意が必要である。
+        もし、部分項 \code(`t1`); が値になるまで評価されて、\code(`fold [T] v`); の形にならなければ、行き詰まり状態となってしまうためである。
+        ところが、項 \code(`t`); が正しく型付けされているなら問題はない。
+        なぜなら、項 \code(`t`); の型付け導出の最後が \code(`T-Unfld`); であるとき、
+        部分項 \code(`t1`); は再帰型を持っており、\code(`E-Unfld`); によって値となるまで評価されれば、
+        部分項 \code(`t1`); は\code(`fold [T] v`); の形の値を持つことが帰納法の仮定より得られるためである。
+      }
+      +p{
+        [保存] ${\mu X.T} と ${\brace{X \mapsto \mu X.T}T} が同型であるという定理が所与ならば、特に問題なさそう。
+      }
+    >
+  >
+    % +clear-page{}
+>
