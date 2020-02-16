@@ -20,6 +20,7 @@ dependencies:
 - megaparsec
 - base >=4.7 && <5
 - deepseq
+- microlens
 name: tapl
 version: 0.1.0
 author: maton

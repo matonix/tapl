@@ -1,0 +1,45 @@
+@require: math
+@require: vdecoset
+
+let-math \adddef = math-char MathRel `::=`
+let-math \with = math-char MathRel `with`
+
+let-math \bind l v i = ${#l_#i = #v_#i}
+let-math \binds l v i n m = ${#l_#i = #v_#i\ ^{#i \in #n..#m}}
+let-math \withapp l r = ${\brace{#l} \with \brace{#r}}
+
+let-math \tj mG me mty = ${#mG \vdash #me : #mty}
+
+let-math \bar x = 
+  let underline = math-char MathOrd `___`
+  in math-upper x underline
+
+let-block ctx +math-list mlst =
+  let ib =
+    mlst |> List.fold-left-adjacent (fun ibacc m _ mnextopt -> (
+      let ib = embed-math ctx m in
+      match mnextopt with
+      | None    -> ibacc ++ ib ++ inline-fil
+      | Some(_) -> ibacc ++ ib ++ discretionary 1000 inline-fil inline-fil inline-fil
+    )) inline-fil
+  in
+    line-break true true ctx ib
+
+let-block ctx +quote it =
+  let size = get-font-size ctx *' 0.88 *. 2.0 in
+    let pads = (size, 0pt, 0pt, 0pt) in
+    let decoset = VDecoSet.quote-round 6pt 4pt (Gray(0.75)) in
+    block-frame-breakable ctx pads decoset
+      (fun ctx -> read-block ctx it)
+
+let-block ctx +indent it =
+  let indent-size = get-font-size ctx *' 0.88 *. 3.0 in
+  let remove-pad = get-font-size ctx *' float (-1) in
+  let pads = (indent-size, 0pt, 0pt, 0pt) in
+  let decoset = VDecoSet.empty in
+    block-frame-breakable ctx pads decoset 
+      (fun ctx -> read-block ctx it)
+
+let-inline ctx \indent = 
+  let indent-size = get-font-size ctx *' 0.88 *. 3.0 in
+  inline-skip indent-size

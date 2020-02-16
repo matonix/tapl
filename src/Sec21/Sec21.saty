@@ -1,0 +1,69 @@
+@import: code
+@require: itemize
+@require: table
+@require: proof
+@import: stdjareport-tapl-ubu
+@import: local
+
+document (|
+  title = {型システム入門メモ};
+  author = {maton};
+|) '<
+  +chapter?:(21){再帰型のメタ理論}<
+    +section?:(1){帰納法と余帰納法}<
+      +practice?:(7)(|
+        is-recommended = false;
+        stars = 1;
+        has-answer = true;
+      |){
+        生成関数${E_2}は以下の推論規則から定義されている。
+      }
+      +math-list[
+        ${};
+        ${\derive{||}{a}};
+        ${\derive{|c|}{b}};
+        ${\derive{|a|b|}{c}};
+        ${}
+      ];
+      +p{
+        関係${E_2}に含まれる組の集合は以下のようになる。
+        \align[
+          ${||E_2\paren{\emptyset}|=|\brace{a}|\ |E_2\paren{\brace{a, b}}|=|\brace{a, c}|};
+          ${||E_2\paren{\brace{a}}|=|\brace{a}|\ |E_2\paren{\brace{a, c}}|=|\brace{a, b}|};
+          ${||E_2\paren{\brace{b}}|=|\brace{a}|\ |E_2\paren{\brace{b, c}}|=|\brace{a, b}|};
+          ${||E_2\paren{\brace{c}}|=|\brace{a, b}|\ |E_2\paren{\brace{a, b, c}}|=|\brace{a, b, c}|};
+        ];
+        このとき、${E_2}について閉じている集合は、
+        ${\brace{a}, \brace{a, b, c}}であり、
+        ${E_2}について整合的な集合は、
+        ${\emptyset, \brace{a}, \brace{a, b, c}}である。
+        よって、${\mu E_2 = \brace{a},\ \nu E_2 = \brace{a, b, c}}である。
+      }
+      +practice?:(9)(|
+        is-recommended = true;
+        stars = 3;
+        has-answer = true;
+      |){
+        公理 2.4.1. 自然数上の通常の帰納法の原理は、
+      }
+    >
+    +quote<
+      +pn{
+        ${P}を自然数上の述語とする。このとき、
+      }
+      +pnn{
+        \indent;各自然数${n}に対して、
+      }
+      +pnn{
+        \indent;\indent;任意の${i<n}に対して${P\paren{i}}が成り立つとき、
+      }
+      +pnn{
+        \indent;\indent;${P\paren{n}}が証明できる
+      }
+      +pnn{
+        \indent;ならば、すべての${n}に対して${P\paren{n}}が成り立つ。
+      }
+    >
+  >
+    % +clear-page{}
+>

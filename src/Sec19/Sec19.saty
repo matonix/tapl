@@ -2,7 +2,7 @@
 @require: itemize
 @require: table
 @require: proof
-@import: stdjareport-tapl
+@import: stdjareport-tapl-ubu
 @import: local
 
 document (|

@@ -298,13 +298,17 @@ proj f n = case f of
 -- >>> proj r1 0
 -- 1
 
--- * 20.2.1
+-- * 20.2.1 コンパイラが死ぬのでコメントアウト
 
-newtype T = Fold { unfold :: T -> T }
+-- newtype T = Fold { unfold :: T -> T }
 
-fixT :: (T -> T) -> T
-fixT = \(f :: T -> T) -> 
-    (\(x :: T) -> f (unfold x x)) 
-    (Fold (\(x :: T) -> f (unfold x x)))
+-- fixT :: (T -> T) -> T
+-- fixT = \(f :: T -> T) -> 
+--     (\(x :: T) -> f (unfold x x)) 
+--     (Fold (\(x :: T) -> f (unfold x x)))
 
-{-# ANN fixT "HLint: ignore Redundant lambda" #-}
+-- {-# ANN fixT "HLint: ignore Redundant lambda" #-}
+
+-- コンパイラが死ぬ話については下記を参照
+-- https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/bugs.html#bugs-in-ghc
+-- https://www.microsoft.com/en-us/research/wp-content/uploads/2002/07/inline.pdf
