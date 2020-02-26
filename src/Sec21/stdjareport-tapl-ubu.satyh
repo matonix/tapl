@@ -51,7 +51,6 @@ module StdJaReport : sig
   direct \figure : [string?; inline-text; block-text] inline-cmd
   direct +p : [inline-text] block-cmd
   direct +pn : [inline-text] block-cmd
-  direct +pnn : [inline-text] block-cmd
   direct +chapter : [int?; string?; string?; inline-text; block-text] block-cmd
   direct +section : [int?; string?; string?; inline-text; block-text] block-cmd
   direct +subsection : [string?; string?; inline-text; block-text] block-cmd
@@ -395,12 +394,6 @@ end = struct
     let ib-parag = ib-inner ++ inline-fil in
       form-paragraph ctx ib-parag
 
-  let-block ctx +pnn inner =
-    let size = get-font-size ctx in
-    let ib-inner = read-inline ctx inner in
-    let ib-parag = ib-inner ++ inline-fil in
-      form-paragraph (ctx |> set-paragraph-margin (size *' 0.5) (size *' 0.5)) ib-parag
-
   let chapter-scheme ctx label title outline-title-opt inner =
     let ctx-title = make-chapter-title ctx in
     let () = increment num-chapter in
@@ -572,22 +565,22 @@ end = struct
 
   let-block ctx +theorem ?:numopt ?:wordopt ?:labelopt inner =
     let label = make-label `theorem:` labelopt in
-      theorem-scheme ctx (set-latin-font font-latin-italic) {Theorem} numopt wordopt None label inner
+      theorem-scheme ctx (fun x -> x) {定理} numopt wordopt None label inner
 
 
   let-block ctx +lemma ?:numopt ?:wordopt ?:labelopt inner =
     let label = make-label `lemma:` labelopt in
-      theorem-scheme ctx (set-latin-font font-latin-italic) {Lemma} numopt wordopt None label inner
+      theorem-scheme ctx (fun x -> x) {補題} numopt wordopt None label inner
 
 
   let-block ctx +corollary ?:numopt ?:wordopt ?:labelopt inner =
     let label = make-label `corollary:` labelopt in
-      theorem-scheme ctx (set-latin-font font-latin-italic) {Corollary} numopt wordopt None label inner
+      theorem-scheme ctx (fun x -> x) {系} numopt wordopt None label inner
 
 
   let-block ctx +example ?:numopt ?:wordopt ?:labelopt inner =
     let label = make-label `example:` labelopt in
-      theorem-scheme ctx (fun x -> x) {Example} numopt wordopt None label inner
+      theorem-scheme ctx (fun x -> x) {例} numopt wordopt None label inner
 
 
   let-block ctx +practice ?:numopt ?:wordopt ?:labelopt conf inner =

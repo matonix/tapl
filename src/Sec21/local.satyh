@@ -32,14 +32,15 @@ let-block ctx +quote it =
     block-frame-breakable ctx pads decoset
       (fun ctx -> read-block ctx it)
 
-let-block ctx +indent it =
-  let indent-size = get-font-size ctx *' 0.88 *. 3.0 in
-  let remove-pad = get-font-size ctx *' float (-1) in
-  let pads = (indent-size, 0pt, 0pt, 0pt) in
-  let decoset = VDecoSet.empty in
-    block-frame-breakable ctx pads decoset 
-      (fun ctx -> read-block ctx it)
-
 let-inline ctx \indent = 
   let indent-size = get-font-size ctx *' 0.88 *. 3.0 in
   inline-skip indent-size
+
+let-block ctx +lefts its =
+  let l = get-font-size ctx *' 0.25 in
+  let bbs =
+    its |> List.map (fun it ->
+    line-break true true (ctx |> set-paragraph-margin l l)
+    (read-inline ctx it ++ inline-fil))
+  in
+  bbs |> List.fold-left (+++) block-nil

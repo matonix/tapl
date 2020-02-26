@@ -37,33 +37,62 @@ document (|
         ${\brace{a}, \brace{a, b, c}}であり、
         ${E_2}について整合的な集合は、
         ${\emptyset, \brace{a}, \brace{a, b, c}}である。
-        よって、${\mu E_2 = \brace{a},\ \nu E_2 = \brace{a, b, c}}である。
+        以上から、${\mu E_2 = \brace{a},\ \nu E_2 = \brace{a, b, c}}である。
+      }
+      +corollary?:(8)?:({定理 21.1.4 の系}){
+        \enumerate{
+          * \emph{帰納法原理}: ${X}が${F}について閉じているならば、${\mu F \subseteq X}である。
+          * \emph{余帰納法原理}: ${X}が${F}について整合的ならば、${X \subseteq \nu F}である。
+        }
       }
       +practice?:(9)(|
         is-recommended = true;
         stars = 3;
         has-answer = true;
       |){
-        公理 2.4.1. 自然数上の通常の帰納法の原理は、
+        公理 2.4.1. [自然数上の通常の帰納法の原理]は、以下のように表現される。
       }
     >
     +quote<
-      +pn{
-        ${P}を自然数上の述語とする。このとき、
-      }
-      +pnn{
-        \indent;各自然数${n}に対して、
-      }
-      +pnn{
-        \indent;\indent;任意の${i<n}に対して${P\paren{i}}が成り立つとき、
-      }
-      +pnn{
-        \indent;\indent;${P\paren{n}}が証明できる
-      }
-      +pnn{
-        \indent;ならば、すべての${n}に対して${P\paren{n}}が成り立つ。
-      }
+      +lefts{
+        | ${P}を自然数上の述語とする。このとき、
+        |
+        | \indent;各自然数${n}に対して、
+        | \indent;\indent;任意の${i<n}に対して${P\paren{i}}が成り立つとき、
+        | \indent;\indent;${P\paren{n}}が証明できる
+        | \indent;ならば、すべての${n}に対して${P\paren{n}}が成り立つ。
+      |}
     >
+    +pn{
+      ここで、 
+    }
+    +lefts{
+      | \indent;${N}以下の任意の自然数${n}に対して、
+      | \indent;\indent;任意の${i<n}に対して${P\paren{i}}が成り立つとき、
+      | \indent;\indent;${P\paren{n}}が証明できる
+    |}
+    +pn{
+      という言明が真になる${U}の部分集合を${X_N}とし、
+      ${F}をある言明${X_N}から言明${X_M\ \paren{M \leq N}}を生成する関数とする。
+      このとき生成される言明${X_M}は${M}以下の任意の自然数に対する言明であり、
+      言明${X_N}は言明${X_M}を含んでいる。
+      すなわち、${F\paren{X}\subseteq X}であり、${X}が${F}について閉じている。
+      このとき、帰納法原理により${\mu F \subseteq X}である。
+      ここで、${\mu F}とは、${F}の最小不動点であり、
+      ${\mu F = \bigcap_{X \in C} X}
+      ただし、 ${C = \setsep{X}{F\paren{X} \subseteq X}}である。
+      すなわち、すべての${n}に対して成り立つ（みたいなことがいいたい）
+    }
+    +p{
+      解答を見ると、${F\paren{P} \subseteq P}であることが容易に確認できるようだが、
+      解釈が難しかったので丁寧に書き下してみる。
+      ここで、ある自然数${k}が述語${P}を満たす、すなわち${P\paren{k}}であるとする。
+      このとき、述語${P}の定義から明らかに${P\paren{k+1}}である。
+      また、${F\paren{X}}の定義から、${k + 1 \in F\paren{P}}である。
+      ただし、${k \in F\paren{P}}かどうかは明らかではない。
+      このことから、${F\paren{P} \subseteq P}となる。うーん、なんか微妙な感じ……。
+      これ以降の議論は特に問題ないと思う。
+    }
   >
     % +clear-page{}
 >
