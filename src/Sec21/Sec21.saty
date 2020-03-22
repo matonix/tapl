@@ -4,6 +4,7 @@
 @require: proof
 @import: stdjareport-tapl-ubu
 @import: local
+@require: math
 
 document (|
   title = {型システム入門メモ};
@@ -84,7 +85,7 @@ document (|
       すなわち、すべての${n}に対して成り立つ（みたいなことがいいたい）
     }
     +p{
-      解答を見ると、${F\paren{P} \subseteq P}であることが容易に確認できるようだが、
+      \textbf{解答を見ると}、${F\paren{P} \subseteq P}であることが容易に確認できるようだが、
       解釈が難しかったので丁寧に書き下してみる。
       ここで、ある自然数${k}が述語${P}を満たす、すなわち${P\paren{k}}であるとする。
       このとき、述語${P}の定義から明らかに${P\paren{k+1}}である。
@@ -92,6 +93,150 @@ document (|
       ただし、${k \in F\paren{P}}かどうかは明らかではない。
       このことから、${F\paren{P} \subseteq P}となる。うーん、なんか微妙な感じ……。
       これ以降の議論は特に問題ないと思う。
+    }
+  >
+  +section{有限型と無限型}<
+    +p{
+      \textsf{T}の説明はごたごたしているが、結局1と2の列で木の辿り方を表現していて、
+      木型\textsf{T}によって辿った先の型構築子が得られるということ。
+      1と2の列で任意の二分木の頂点を表現でき、
+      その頂点に対応する型構築子と得る関数として、「型」が表現されている。
+      関数としての型は単射であるが全射であるとは限らない（パスに対して未定義を返すことがある）。
+    }
+    +practice?:(2)(|
+      is-recommended = true;
+      stars = 2;
+      has-answer = true;
+    |){
+      わからず。以下駄文。
+
+      ${dom\paren{\mathsf!{T}} \subseteq \brace{1,2}^*}であることから、普遍集合${\mathcal{U} = \brace{1,2}^*}となる。
+      すべての木型の集合${\mathcal{T}}は、
+      任意の列${s \in \mathcal{U}}に対して
+      ${s \in dom\paren{\mathsf!{T}}}となるような木型\textsf{T}をすべて集めたものである。
+
+      また、有限の木型の集合${\mathcal{T}_f}は、
+      任意の${s_f \in dom\paren{\mathsf!{T}}}が、
+      有限列となるような木型\textsf{T}をすべて集めたものである。
+    }
+    +p{
+      \textbf{解答を見ると}、まず型とかそういう概念を投げ捨てて、
+      木に型構築子の記号ぼこぼこ当てはめたものの集まりを普遍集合${\mathcal{U}}としている。
+      ただし任意の木というわけではなく、（空列を含む）各部分列を定義域に持つような木である。
+      このとき${\mathcal{T}_f \subseteq \mathcal{T} \subseteq \mathcal{U}}である。
+      次に生成関数${F}を定義しているが、与えられた木の集まりから全パターンのペアを取ってきて、
+      ${\times}と${\rightarrow}の２種類の型構築子でそれぞれくっつけたものを生成している（この略記法の意味がわからず500回見返した）。
+      この定義のいいところは、${\mathcal{T}}の要素に対して整合的になり、
+      ${\mathcal{T}_f}の要素に対して閉じているという点である。
+    }
+    +p{
+      ${\mathcal{T}}の要素に対して整合的になるのはなぜだろうか。
+      例えば${\mathsf!{T}\paren{11111}}が定義されているとき、木型\textsf{T}の2番目の定義より、
+      その各部分列、例えば${\mathsf!{T}\paren{1111}}も定義されているはずである。
+      そして、生成関数${F}によって元の${\mathsf!{T}\paren{11111}}の定義も復元される
+      （型構築子は${\times}と${\rightarrow}のどちらの場合でも復元される）。
+      この議論は、列の長さがたとえ無限長であっても大丈夫だと思う。
+    }
+    +p{
+      次に、${\mathcal{T}_f}の要素に対して閉じていることをざっくり確認する。
+      例えば${\mathsf!{T}\paren{11111}}が定義されていて、
+      ${\times}と${\rightarrow}のどちらかであるとき、
+      生成関数${F}によって${\mathsf!{T}\paren{1,11111}}が得られているとしよう。
+      木型\textsf{T}の3番目の定義より、${\mathsf!{T}\paren{11111,1}}も定義されている。
+      増える位置が違うのが気になるポイントだが、
+      他のパターンをいい感じに網羅すると思うので大丈夫なんじゃないでしょうか（力尽きた）。
+    }
+  >
+  +section{部分型関係}<
+    +practice?:(3)(|
+      is-recommended = false;
+      stars = 1;
+      has-answer = true;
+    |){
+      ${\paren{\mathsf!{Top}, \mathsf!{Top}\times\mathsf!{Top}} 
+        \in \mathcal{T}\times\mathcal{T}} だが、
+      ${\paren{\mathsf!{Top}, \mathsf!{Top}\times\mathsf!{Top}} 
+        \nin \mu S} である。
+    }
+    +practice(|
+      is-recommended = false;
+      stars = 1;
+      has-answer = true;
+    |){
+      型${T = \mathsf!{Top}\times\paren{\mathsf!{Top}\times\cdots}} という無限の型としたとき、
+      ${\paren{T, T} \in \nu S} だが、 ${\paren{T, T} \nin \mu S} である。
+      一方、${\mu S_f}によって関連付けられるが、${\nu S_f}によっては関連付けられないような型の二つ組は無い。
+    }
+    +p{
+      \textbf{解答を見ると}、まず後者は、
+      任意の${\nu S_f}の要素が${\mu S_f}に含まれることを
+      有限な型のサイズに関する帰納法で示せば良いらしい。
+      （もっと強い主張をすると、両者は一致する模様。）
+      前者に関しては、${\mu S}が有限型しか含むことができないから、
+      と、みせかけてそうでもないらしい（複雑な議論が必要、で止まってる）。
+    }
+    +practice?:(8)(|
+      is-recommended = true;
+      stars = 2;
+      has-answer = true;
+    |){
+      無限木型上の部分型関係、すなわち${\nu S}が反射的であることを示す。
+      まずは反射的な関係を定義 21.3.5. のスタイルで定義する。
+      次に、補題 21.3.6. のスタイルで反射的関係が一般の組に対する単調関数に対して成り立つ性質を示す。
+      最後に 定理 21.3.7. のスタイルで、前述の補題が無限木型上の部分型関係においても成り立つことを示す。
+    }
+    +definition{
+      関係 ${R \subseteq \mathcal{U}\times\mathcal{U}} は、
+      次の単調関数 ${
+        RR\paren{R} = \bigcup_{\paren{x, y} \in R} \brace{\paren{x, x}, \paren{y, y}}
+      } に関して閉じている、
+      すなわち ${RR\paren{R} \subseteq R} であるときに、\textbf{反射的}であるという。
+    }
+    +lemma{
+      \math(
+        let pow = ${\mathcal{P}\paren{\mathcal{U}\times\mathcal{U}}} in
+        ${ F \in #pow \rightarrow #pow }
+      ); を単調関数とする。任意の ${R \subseteq \mathcal{U}\times\mathcal{U}} について、
+      ${RR\paren{F\paren{R}} \subseteq F\paren{RR\paren{R}}} ならば、 ${\nu F} は反射的である。
+    }
+    +pn{
+      \textsf{[証明]} ${\nu F} は不動点であるので、
+      ${\nu F = F\paren{\nu F}} であり、
+      ${RR\paren{\nu F} = RR\paren{F\paren{\nu F}}} が言える。
+      補題の仮定より（${R} を ${\nu F} に置き換える）、
+      ${RR\paren{F\paren{\nu F}} \subseteq F\paren{RR\paren{\nu F}}} である。
+      また、 ${\nu F = F\paren{\nu F}} なので、 
+      ${RR\paren{\nu F} \subseteq F\paren{RR\paren{\nu F}}} である。
+      言い換えると、${RR\paren{\nu F}} は ${F} について整合的であるので、
+      余帰納法の原理より ${RR\paren{\nu F} \subseteq \nu F} である。
+      定義 21.3.9.により、 これは ${\nu F} が反射的であることと同値である。
+    }
+    +theorem{
+      ${\nu S} は反射的である。
+    }
+    +pn{
+      \textsf{[証明]} 補題 21.3.10.により、 
+      任意の ${R \subseteq \mathcal{T}\times\mathcal{T}} に対して、
+      ${RR\paren{S\paren{R}} \subseteq S\paren{RR\paren{R}}} であることを示せば良い。
+      すなわち、 ${\paren{\mathsf!{T}, \mathsf!{T}} \in RR\paren{S\paren{R}}} としたとき、
+      どのような \textsf{T} においても ${\paren{\mathsf!{T}, \mathsf!{T}} \in S\paren{RR\paren{R}}} であることを示せば良い。
+      ここで、\textsf{T} の形に関する場合分けを行う。
+      \listing{
+        * ${\mathsf!{T} = \mathsf!{Top}} の場合
+          ** ${S\paren{\cdot}}の定義より、
+          ${S}で生成される集合には必ず ${\paren{\mathsf!{T}, \mathsf!{T}}} が含まれるため、
+          ${\paren{\mathsf!{T}, \mathsf!{T}} \in S\paren{RR\paren{R}}} である。
+        * ${\mathsf!{T} = \mathsf!{T}_1 \times \mathsf!{T}_2} の場合
+          ** ある ${\mathsf!{S}_1 \times \mathsf!{S}_2} に対して、 
+          ${\paren{\mathsf!{S}_1 \times \mathsf!{S}_2, \mathsf!{T}_1 \times \mathsf!{T}_2} \in S\paren{R}} または、
+          ${\paren{\mathsf!{T}_1 \times \mathsf!{T}_2, \mathsf!{S}_1 \times \mathsf!{S}_2} \in S\paren{R}} である。
+          ** 前者の場合、 ${\paren{\mathsf!{S}_1, \mathsf!{T}_1}, \paren{\mathsf!{S}_2, \mathsf!{T}_2} \in R} である。
+          このとき、 ${RR} の定義より、 ${\paren{\mathsf!{T}_1, \mathsf!{T}_1}, \paren{\mathsf!{T}_2, \mathsf!{T}_2} \in RR\paren{R}} であり、
+          ${S} の定義より、 ${\paren{\mathsf!{T}_1 \times \mathsf!{T}_2, \mathsf!{T}_1 \times \mathsf!{T}_2} = \paren{\mathsf!{T}, \mathsf!{T}} \in S\paren{RR\paren{R}}} が得られる。
+          ** 後者の場合も同様。
+        * ${\mathsf!{T} = \mathsf!{T}_1 \rightarrow \mathsf!{T}_2} の場合
+          ** 同様。
+      }
     }
   >
     % +clear-page{}

@@ -64,6 +64,15 @@ module StdJaReport : sig
   direct \emph : [inline-text] inline-cmd
   direct \dfn : [inline-text] inline-cmd
   direct \footnote : [inline-text] inline-cmd
+  % form https://github.com/puripuri2100/stjarticle/blob/master/stjarticle.satyh
+  direct \textrm : [inline-text] inline-cmd
+  direct \textbf : [inline-text] inline-cmd
+  direct \textit : [inline-text] inline-cmd
+  direct \textsf : [inline-text] inline-cmd
+  direct \textgt : [inline-text] inline-cmd
+  direct \textmc : [inline-text] inline-cmd
+  direct \textcal : [inline-text] inline-cmd
+  direct \mathsf : [inline-text] math-cmd
 
 end = struct
 
@@ -126,6 +135,7 @@ end = struct
 
   % let font-latin-roman  = (`NotoSerifJP`, font-ratio-latin, 0.)
   % let font-latin-sans   = (`NotoSansJP`, font-ratio-latin, 0.)
+  let font-latin-cal   = (`jsMath`, font-ratio-latin, 0.)
   let font-latin-mono   = (`DejaVuSansMono`, font-ratio-latin, 0.)
   let font-cjk-mincho   = (`NotoSerifJP`, font-ratio-cjk  , 0.)
   let font-cjk-gothic   = (`NotoSansJP`, font-ratio-cjk  , 0.)
@@ -560,7 +570,7 @@ end = struct
 
   let-block ctx +definition ?:numopt ?:wordopt ?:labelopt inner =
     let label = make-label `definition:` labelopt in
-      theorem-scheme ctx (fun x -> x) {Definition} numopt wordopt None label inner
+      theorem-scheme ctx (fun x -> x) {定義} numopt wordopt None label inner
 
 
   let-block ctx +theorem ?:numopt ?:wordopt ?:labelopt inner =
@@ -633,7 +643,59 @@ end = struct
     in
       FootnoteScheme.main ctx ibf bbf
 
-let-block ctx +clear-page _ = clear-page
+  let-inline ctx \textrm it =
+    let ctxrm =
+        ctx |> set-latin-font font-latin-roman
+            |> set-cjk-font font-cjk-mincho
+    in
+  read-inline ctxrm it
+
+  let-inline ctx \textbf it =
+      let ctxbf =
+          ctx |> set-latin-font font-latin-bold
+              |> set-cjk-font font-cjk-gothic
+      in
+  read-inline ctxbf it
+
+  let-inline ctx \textit it =
+      let ctxit =
+          ctx |> set-latin-font font-latin-italic
+              |> set-cjk-font font-cjk-mincho
+  in
+  read-inline ctxit it
+
+  let-inline ctx \textsf it =
+      let ctxsf =
+          ctx |> set-latin-font font-latin-sans
+              |> set-cjk-font font-cjk-gothic
+      in
+  read-inline ctxsf it
+
+  let-inline ctx \textmc it =
+      let ctxmc =
+          ctx |> set-latin-font font-latin-roman
+              |> set-cjk-font font-cjk-mincho
+      in
+  read-inline ctxmc it
+
+  let-inline ctx \textgt it =
+      let ctxgt =
+          ctx |> set-latin-font font-latin-bold
+              |> set-cjk-font font-cjk-gothic
+      in
+  read-inline ctxgt it
+
+  let-inline ctx \textcal it =
+      let ctxcal =
+          ctx |> set-latin-font font-latin-cal
+              |> set-cjk-font font-cjk-gothic
+      in
+  read-inline ctxcal it
+
+  let-math \mathsf t = ${\text!{\textsf{#t;}}}
+
+  let-block ctx +clear-page _ = clear-page
+
 
 end
 
