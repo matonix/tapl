@@ -223,15 +223,15 @@ document (|
       ここで、\textsf{T} の形に関する場合分けを行う。
       \listing{
         * ${\mathsf!{T} = \mathsf!{Top}} の場合
-          ** ${S\paren{\cdot}}の定義より、
+          ** ${S}の定義より、
           ${S}で生成される集合には必ず ${\paren{\mathsf!{T}, \mathsf!{T}}} が含まれるため、
-          ${\paren{\mathsf!{T}, \mathsf!{T}} \in S\paren{RR\paren{R}}} である。
+          ${\paren{\mathsf!{T}, \mathsf!{T}}} ${\in S\paren{RR\paren{R}}} である。
         * ${\mathsf!{T} = \mathsf!{T}_1 \times \mathsf!{T}_2} の場合
           ** ある ${\mathsf!{S}_1 \times \mathsf!{S}_2} に対して、 
           ${\paren{\mathsf!{S}_1 \times \mathsf!{S}_2, \mathsf!{T}_1 \times \mathsf!{T}_2} \in S\paren{R}} または、
           ${\paren{\mathsf!{T}_1 \times \mathsf!{T}_2, \mathsf!{S}_1 \times \mathsf!{S}_2} \in S\paren{R}} である。
           ** 前者の場合、 ${\paren{\mathsf!{S}_1, \mathsf!{T}_1}, \paren{\mathsf!{S}_2, \mathsf!{T}_2} \in R} である。
-          このとき、 ${RR} の定義より、 ${\paren{\mathsf!{T}_1, \mathsf!{T}_1}, \paren{\mathsf!{T}_2, \mathsf!{T}_2} \in RR\paren{R}} であり、
+          このとき、 ${RR} の定義より、 ${\paren{\mathsf!{T}_1, \mathsf!{T}_1}, \paren{\mathsf!{T}_2, \mathsf!{T}_2}} ${\in RR\paren{R}} であり、
           ${S} の定義より、 ${\paren{\mathsf!{T}_1 \times \mathsf!{T}_2, \mathsf!{T}_1 \times \mathsf!{T}_2} = \paren{\mathsf!{T}, \mathsf!{T}} \in S\paren{RR\paren{R}}} が得られる。
           ** 後者の場合も同様。
         * ${\mathsf!{T} = \mathsf!{T}_1 \rightarrow \mathsf!{T}_2} の場合
