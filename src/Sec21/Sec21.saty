@@ -239,5 +239,26 @@ document (|
       }
     }
   >
+  +section{推移律に関する余談}<
+    +practice?:(2)(|
+      is-recommended = false;
+      stars = 1;
+      has-answer = true;
+    |){
+      生成関数 ${F^{TR}\paren{R} = F\paren{R} \cup TR\paren{R}} の最大不動点 ${\nu F^{TR}} が
+      ${\mathcal{U}\times\mathcal{U}} 上の全関係であることを示す。
+    }
+    +p{
+      \textbf{[考察]} ${TR} について整合的な集合 ${X} は少なくても反射的でなければならない。
+      なぜなら ${X \subseteq TR\paren{X}} が成り立つには、${TR} によって ${X} の元が復元されなければならないからだ。
+      つまり、推移的であるような2つの関係の少なくとも片方は、${\paren{x, x}}のような反射的な関係を持っていることとなる。
+    }
+    +p{
+      ここで、${\mathcal{U}\times\mathcal{U}} 上の全関係を含む集合 ${U} は ${TR} について整合的である。
+      なぜなら、全関係を含むということは反射的な関係をすべて含むからである。
+      したがって、Knaster-Tarskiの定理より、最大不動点 ${\nu F^{TR}} は${TR} について
+      整合的なすべての集合の和集合であるから、 ${\nu F^{TR} = U} である。
+    }
+  >
     % +clear-page{}
 >
