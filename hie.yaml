@@ -1,0 +1,7 @@
+cradle:
+  cabal:
+    - path: "src"
+      component: "lib:tapl"
+
+    - path: "test"
+      component: "tapl:test:tapl-test"

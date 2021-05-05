@@ -1,2 +1,0 @@
-cmd: "stack build"
-cwd: "{PROJECT_PATH}"

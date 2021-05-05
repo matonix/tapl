@@ -1,0 +1,64 @@
+cabal-version:  2.4
+
+name:           tapl
+version:        0.2.0
+category:       Web
+homepage:       https://github.com/matonix/tapl#readme
+bug-reports:    https://github.com/matonix/tapl/issues
+author:         maton
+maintainer:     automatonix@gmail.com
+copyright:      Yokoyama Haruki
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/matonix/tapl
+
+common shared-properties
+  default-language: Haskell2010
+  build-depends:
+      base ^>=4.14.0.0
+    , deepseq
+    , megaparsec
+    , microlens
+    , parser-combinators
+
+
+
+library
+  import: shared-properties
+  exposed-modules:
+      Sec10.Parser
+      Sec10.SimplyTyped
+      Sec11.SimplyTypedLet
+      Sec17.Ex3_1
+      Sec17.Ex3_2
+      Sec17.Subtyping
+      Sec20.RecursiveTypes
+      Sec4.Arith
+      Sec4.Ex4_2_1
+      Sec4.Ex4_2_2
+      Sec7.Ex7_3_1
+      Sec7.Untyped
+  other-modules:
+      Paths_tapl
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+
+test-suite tapl-test
+  import: shared-properties
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Sec10.ParserSpec
+      Sec10.SimplyTypedSpec
+      Sec11.SimplyTypedLetSpec
+      Paths_tapl
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+    hspec
