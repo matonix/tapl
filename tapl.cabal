@@ -27,12 +27,14 @@ common shared-properties
     , template-haskell
     , text
     , syb
+    , safe-exceptions
 
 
 
 library
   import: shared-properties
   exposed-modules:
+      Revisited.Bool
       Sec10.Parser
       Sec10.SimplyTyped
       Sec11.SimplyTypedLet
