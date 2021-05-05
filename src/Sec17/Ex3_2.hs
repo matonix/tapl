@@ -1,7 +1,6 @@
 module Sec17.Ex3_2 where
 -- from Sec17.Subtyping
 
-import           Data.Semigroup                 ( (<>) )
 import           Data.Bifunctor
 import           Control.Exception
 

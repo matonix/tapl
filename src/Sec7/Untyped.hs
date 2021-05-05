@@ -1,6 +1,5 @@
 module Sec7.Untyped where
 
-import Data.Semigroup ((<>))
 import Control.Exception
 
 data NoRuleApplies = NoRuleApplies deriving (Show)

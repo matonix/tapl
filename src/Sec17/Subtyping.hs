@@ -1,7 +1,6 @@
 module Sec17.Subtyping where
 -- from Sec10.SimplyTyped
 
-import           Data.Semigroup                 ( (<>) )
 import           Data.Bifunctor
 import           Control.Exception
 

@@ -1,6 +1,5 @@
 module Sec10.SimplyTyped where
 
-import Data.Semigroup ((<>))
 import Control.Exception
 
 data NoRuleApplies = NoRuleApplies deriving (Show)
@@ -17,7 +16,7 @@ data Term
   deriving (Eq, Show)
 
 data Ty 
-  = TyArr Ty Ty -- * -> *
+  = TyArr Ty Ty -- | * -> *
   | TyBool -- Bool
   deriving (Eq, Show)
 
