@@ -24,6 +24,9 @@ common shared-properties
     , megaparsec
     , microlens
     , parser-combinators
+    , template-haskell
+    , text
+    , syb
 
 
 
