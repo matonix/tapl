@@ -2,7 +2,6 @@ module Sec17.Ex3_1 where
 -- from Sec17.Subtyping and Sec10.SimplyTyped
 -- Impl Join \/ and Meet /\
 
-import           Data.Semigroup                 ( (<>) )
 import           Data.Bifunctor
 import           Control.Exception
 
