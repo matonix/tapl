@@ -34,7 +34,10 @@ common shared-properties
 library
   import: shared-properties
   exposed-modules:
-      Revisited.Bool
+      Revisited.B.Syntax
+      Revisited.B.Semantics
+      Revisited.NB.Syntax
+      Revisited.NB.Semantics
       Sec10.Parser
       Sec10.SimplyTyped
       Sec11.SimplyTypedLet
