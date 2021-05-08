@@ -38,6 +38,8 @@ library
       Revisited.B.Semantics
       Revisited.NB.Syntax
       Revisited.NB.Semantics
+      Revisited.Untyped.Syntax
+      Revisited.Untyped.Semantics
       Sec10.Parser
       Sec10.SimplyTyped
       Sec11.SimplyTypedLet
